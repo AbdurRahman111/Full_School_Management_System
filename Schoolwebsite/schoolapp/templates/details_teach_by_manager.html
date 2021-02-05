@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+
+{%block title%}Teacher Details{% endblock %}
+
+{%block body%}
+
+
+<style>
+	.profile-pic{
+		max-width: 200px;
+		max-height:200px;
+		margin: 0 auto;
+		border-radius: 50%;
+	}
+</style>
+
+<br>
+
+<div class="row ml-5 pt-5 pl-5">
+	<div class="col-md-3">
+		<div class="card card-body">
+
+			<hr>
+			<h3 style="text-align: center">{{get_all_techer_by_manger.teacher_name}}</h3>
+			<hr>
+
+
+
+            <img src="/media/uploads/teacher_user.jpg" class="rounded profile-pic" alt="user">
+
+
+		</div>
+	</div>
+	<div class="col-md-6 ml-5 mr-5 pt-3">
+		<div class="card card-body">
+			<table class="table container">
+
+			  <tbody>
+				<tr>
+				  <td>Teacher Name :</td>
+				  <td>{{get_all_techer_by_manger.teacher_name}}</td>
+				</tr>
+				<tr>
+				  <td>Teacher ID :</td>
+				  <td>{{get_all_techer_by_manger.teacher_ID}}</td>
+				</tr>
+				<tr>
+				  <td>Phone :</td>
+				  <td>{{get_all_techer_by_manger.phone_number}}</td>
+				</tr>
+				<tr>
+				  <td>Address :</td>
+				  <td>{{get_all_techer_by_manger.address}}</td>
+				</tr>
+				<tr>
+				  <td>Dob :</td>
+				  <td>{{get_all_techer_by_manger.dob}}</td>
+				</tr>
+
+                <tr>
+				  <td>Major :</td>
+				  <td>
+					{{get_all_techer_by_manger.major}}
+				  </td>
+				</tr>
+			  <tr>
+				  <td>course :</td>
+				  <td>
+					  {% if Assign_teacher_to_courses_filter %}
+
+					  {% for i in Assign_teacher_to_courses_filter %}
+					  {{i.Course_Name.Course_Name}}</br>
+					  {% endfor %}
+					  {% else %}
+					  No courses added
+					  {% endif %}
+				  </td>
+				</tr>
+
+
+			  </tbody>
+			</table>
+		</div>
+</br></br>
+
+
+
+
+	</div>
+</div>
+
+
+{% endblock %}

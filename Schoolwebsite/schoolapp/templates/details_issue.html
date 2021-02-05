@@ -1,0 +1,70 @@
+{%  extends 'base.html' %}
+{% load crispy_forms_tags %}
+{%block title%}Issue Details{% endblock %}
+
+{%block body%}
+<br/>
+<br/>
+<br/>
+<table class="table table-striped container pt-5">
+          <thead>
+            <tr>
+              <th scope="col">User Info</th>
+              <th scope="col">{{get_issue_full.user}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Issue Date</th>
+              <td>{{get_issue_full.date}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Issue</th>
+              <td>{{get_issue_full.issue}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Details</th>
+              <td>{{get_issue_full.details}}</td>
+            </tr>
+            {% if abc %}
+            <tr>
+              <th scope="row">Attachment</th>
+              <td>
+                  <a href="{{get_issue_full.Assignment_name}}" class="btn btn-info btn-sm" target="_blank"> View Issue </a>
+              </td>
+            </tr>
+          {% endif %}
+          <tr>
+              <th scope="row">Status</th>
+              <td><button class="btn btn-info"> {{get_issue_full.status}}</button></td>
+            </tr>
+          <tr>
+              <th scope="row">Change Status</th>
+              <td>
+                  <form class="container pt-5" action="" method="POST" enctype="multipart/form-data">{% csrf_token %}
+						<input type="hidden" name="get_issue_id" value="{{get_issue_full.id}}">
+						{{form3|crispy}}
+						<button type="submit" class="btn btn-outline-success btn-sm">Change Status</button>
+					</form>
+              </td>
+            </tr>
+
+
+          <tr>
+              <th scope="row">Transfer another IT services</th>
+              <td>
+                  <form class="container pt-5" action="" method="POST" enctype="multipart/form-data">{% csrf_token %}
+						<input type="hidden" name="get_issue_id" value="{{get_issue_full.id}}">
+						{{form4|crispy}}
+						<button type="submit" class="btn btn-outline-success btn-sm">Transfer</button>
+					</form>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+<br/>
+<br/>
+<br/><br/>
+<br/>
+<br/>
+{% endblock %}

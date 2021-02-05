@@ -1,0 +1,238 @@
+{% extends 'base.html' %}
+
+
+{%block title%}Home{% endblock %}
+
+{%block body%}
+
+{% if messages %}
+{% for message in messages %}
+
+
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong>WellDone!</strong> {{message}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+{% endfor %}
+{% endif %}
+
+{% if request.session.Teacher_id %}
+
+
+<div class="pt-5 mt-5 bg-info">
+<div class="card card-body pt-5 ml-3 mr-3">
+    <h5 style="text-align: center"><small>Welcome, Sir {{request.session.Teacher_name}}</small></h5>
+
+    <hr>
+    <div class="card container bg-info" style="width: 18rem;">
+
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item pl-5">
+
+
+                    <form action="/sir_course" method="POST">{% csrf_token %}
+                        <div class="form-group">
+                            <input type="hidden" name="teach_course_id" value="{{request.session.Teacher_id}}" class="form-control" id="exampleInputPassword1">
+                        </div>
+                        <button type="submit" class="btn btn-outline-info btn-sm">Go To Your Classroom</button>
+                    </form>
+
+
+            </li>
+
+        </ul>
+    </div>
+    <hr>
+
+
+</div>
+</div>
+
+
+{% elif request.session.Stu_id %}
+
+<div class="pt-5 mt-5 bg-info">
+<div class="card card-body pt-5 ml-3 mr-3">
+    <h5 style="text-align: center"><small>Welcome, {{request.session.Stu_name}}</small></h5>
+
+    <hr>
+    <div class="card container bg-info" style="width: 18rem;">
+
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item pl-5">
+
+
+                    <form action="/student_course_list" method="POST">{% csrf_token %}
+                        <div class="form-group">
+                            <input type="hidden" name="stu_course_id" value="{{request.session.Stu_id}}" class="form-control" id="exampleInputPassword3">
+                        </div>
+                        <button type="submit" class="btn btn-outline-info btn-sm">Go To Your Classroom</button>
+                    </form>
+
+
+            </li>
+
+        </ul>
+    </div>
+    <hr>
+
+
+</div>
+</div>
+
+
+
+{% elif request.session.Staff_id %}
+
+<div class="pt-5 mt-5 bg-info">
+<div class="card card-body pt-5 ml-3 mr-3">
+    <h5 style="text-align: center"><small>Welcome, {{request.session.Staff_name}}</small></h5>
+
+    <hr>
+    <div class="card container bg-info" style="width: 18rem;">
+
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item pl-5">
+
+
+                    <form class="container" action="/staff_page" method="POST">{% csrf_token %}
+                        <div class="form-group">
+                            <input type="hidden" name="staff_id" value="{{request.session.Staff_id}}" class="form-control" id="exampleInputPassword30">
+                            <input type="hidden" name="staff_name" value="{{request.session.Staff_name}}" class="form-control" id="exampleInputPassword30">
+                        </div>
+                        <button type="submit" class="btn btn-outline-info btn-sm">Go To Your Page</button>
+                    </form>
+
+
+            </li>
+
+        </ul>
+    </div>
+    <hr>
+
+
+</div>
+</div>
+
+
+{% elif request.session.manager_id %}
+
+<div class="pt-5 mt-5 bg-info">
+<div class="card card-body pt-5 ml-3 mr-3">
+    <h5 style="text-align: center"><small>Welcome Manager, {{request.session.manager_name}}</small></h5>
+
+    <hr>
+    <div class="card container bg-info" style="width: 18rem;">
+
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item pl-5">
+
+
+                    <form class="container" action="/manager_page" method="POST">{% csrf_token %}
+                        <div class="form-group">
+                            <input type="hidden" name="manager_id" value="{{request.session.manager_id}}">
+                            <input type="hidden" name="manager_name" value="{{request.session.manager_name}}">
+                        </div>
+                        <button type="submit" class="btn btn-outline-info btn-sm">Go To Your Page</button>
+                    </form>
+
+
+            </li>
+
+        </ul>
+    </div>
+    <hr>
+
+
+</div>
+</div>
+
+
+
+{% elif request.session.IT_id %}
+
+<div class="pt-5 mt-5 bg-info">
+<div class="card card-body pt-5 ml-3 mr-3">
+    <h5 style="text-align: center"><small>Welcome IT-Service, {{request.session.IT_name}}</small></h5>
+
+    <hr>
+    <div class="card container bg-info" style="width: 18rem;">
+
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item pl-5">
+
+
+                    <form class="container" action="/it_service_page" method="POST">{% csrf_token %}
+                        <div class="form-group">
+                            <input type="hidden" name="it_sevice_id" value="{{request.session.IT_id}}">
+                            <input type="hidden" name="it_sevice_name" value="{{request.session.IT_name}}">
+                        </div>
+                        <button type="submit" class="btn btn-outline-info btn-sm">Go To Your Page</button>
+                    </form>
+
+
+            </li>
+
+        </ul>
+    </div>
+    <hr>
+
+
+</div>
+</div>
+
+
+
+{% elif request.session.Dean_id %}
+
+<div class="pt-5 mt-5 bg-info">
+<div class="card card-body pt-5 ml-3 mr-3">
+    <h5 style="text-align: center"><small>Welcome Dean, {{request.session.Dean_name}}</small></h5>
+
+    <hr>
+    <div class="card container bg-info" style="width: 18rem;">
+
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item pl-5">
+
+
+                    <form class="container" action="/dean_page" method="POST">{% csrf_token %}
+                        <div class="form-group">
+                            <input type="hidden" name="dean_id" value="{{request.session.Dean_id}}">
+                            <input type="hidden" name="dean_name" value="{{request.session.Dean_name}}">
+                        </div>
+                        <button type="submit" class="btn btn-outline-info btn-sm">Go To Your Page</button>
+                    </form>
+
+
+            </li>
+
+        </ul>
+    </div>
+    <hr>
+
+
+</div>
+</div>
+
+
+
+
+
+{% else %}
+<div class="jumbotron  container pt-5 mt-5">
+  <h1 class="display-4">School Management System !!!</h1>
+  <p class="lead">Wellcome to School Management System. </p>
+  <hr class="my-4">
+  <p>You Have To login for more information !!!</p>
+  <a class="btn btn-success btn-lg" href="login" role="button">Login</a>
+
+</div>
+
+{% endif %}
+
+
+{% endblock %}

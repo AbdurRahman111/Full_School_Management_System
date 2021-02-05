@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+
+{%block title%}Staff Details{% endblock %}
+
+{%block body%}
+
+
+<style>
+	.profile-pic{
+		max-width: 200px;
+		max-height:200px;
+		margin: 0 auto;
+		border-radius: 50%;
+	}
+</style>
+
+<br>
+
+<div class="row ml-5 pt-5 pl-5">
+	<div class="col-md-3">
+		<div class="card card-body">
+
+			<hr>
+			<h3 style="text-align: center">{{get_details_staff.staff_name}}</h3>
+			<hr>
+            <img src="/media/uploads/user.png" class="rounded profile-pic" alt="user">
+			<div class="container">
+				<a class="btn btn-outline-info btn-sm" href="{% url 'change_staff_profile_by_it_service' get_details_staff.id %}">Edit Profile</a>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6 ml-5 mr-5 pt-3">
+		<div class="card card-body">
+			<table class="table container">
+
+			  <tbody>
+				<tr>
+				  <td>Staff Name :</td>
+				  <td>{{get_details_staff.staff_name}}</td>
+				</tr>
+				<tr>
+				  <td>Staff ID :</td>
+				  <td>{{get_details_staff.staff_ID}}</td>
+				</tr>
+                <tr>
+				  <td>Manager :</td>
+				  <td>{{get_details_staff.manager_ID}}</td>
+				</tr>
+				<tr>
+				  <td>Phone :</td>
+				  <td>{{get_details_staff.phone_number}}</td>
+				</tr>
+				<tr>
+				  <td>Address :</td>
+				  <td>{{get_details_staff.address}}</td>
+				</tr>
+				<tr>
+				  <td>Dob :</td>
+				  <td>{{get_details_staff.dob}}</td>
+				</tr>
+
+                <tr>
+				  <td>Major :</td>
+				  <td>
+					{{get_details_staff.major}}
+				  </td>
+				</tr>
+
+              <tr>
+				  <td>Email :</td>
+				  <td>
+					  {% if get_staff_email %}
+
+					  {% for i in get_staff_email %}
+					  {{i.Staff_email}}</br>
+					  {% endfor %}
+					  {% else %}
+					  No Email added
+					  {% endif %}
+				  </td>
+				</tr>
+
+
+			  </tbody>
+			</table>
+		</div>
+</br></br>
+
+
+
+
+	</div>
+</div>
+
+
+{% endblock %}

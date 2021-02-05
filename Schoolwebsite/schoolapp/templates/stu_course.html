@@ -1,0 +1,174 @@
+{%  extends 'base.html' %}
+
+{%block title%}Course{% endblock %}
+
+{%block body%}
+
+{% load humanize %}
+{% load get_dict %}
+
+
+
+<div class="row container pt-5">
+  <div class="col-3">
+    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+      <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Course</a>
+      <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Assignment</a>
+      <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">My Assignment and Grade</a>
+
+    </div>
+  </div>
+  <div class="col-9">
+    <div class="tab-content" id="v-pills-tabContent">
+      <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+
+        <div class="pt-5 ml-5 mr-5 pl-5 pr-5 mt-5">
+          <div class="card card-body pt-5 ml-5 mr-5">
+            <h2 style="text-align: center">Your Course</h2><hr>
+
+            <h6>{{add_courses_deatils}}</h6>
+            {% for v in teacher_id_course %}
+            <hr>
+            <h7>Course Teacher : <b>{{v.Teacher_Name.teacher_name}}</b></h7>
+            {% endfor %}
+    </div>
+  </div>
+
+      </div>
+      <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+
+        {% if get_assignmet_for_stu %}
+
+        {% for n in get_assignmet_for_stu %}
+        <div class="card container mt-4 mb-5">
+              <h5 class="card-header">Assignment Name : {{n.Assignment_name}}</br>
+                Course Name : {{n.course}}</br>
+                <small>Publish Date : {{n.date}}</small></h5>
+              <div class="card-body">
+
+
+                <form action="/details_assignment_comments" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="hidden" name="get_assignment_id" value="{{n.id}}">
+                        <input type="hidden" name="get_stu_id" value="{{request.session.Stu_id}}">
+                        <input type="hidden" name="get_course_main_name" value="{{n.Assignment_name}}">
+                    </div>
+                    <button type="submit" class="btn btn-outline-info btn-sm">See Details</button>
+                </form>
+
+              </div>
+            </div>
+        {% endfor %}
+
+
+
+        </br></br></br></br></br>
+
+
+        {% else %}
+        <span class="text-muted container pt-5 pl-5 ml-4"> No Assignment</span>
+        {% endif %}
+
+      </div>
+      <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+
+
+        {% if get_submit_assignment_stu %}
+
+        {% for q in get_submit_assignment_stu %}
+
+
+        <table class="table table-striped pt-5 mt-5">
+          <thead>
+            <tr>
+              <th scope="col">Student ID</th>
+              <th scope="col">{{q.Student_ID}}</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Assignment Name</th>
+              <td>{{q.Assignment_name}}</td>
+
+            </tr>
+            <tr>
+              <th scope="row">Course</th>
+              <td>{{q.course}}</td>
+
+            </tr>
+            <tr>
+              <th scope="row">Assignment</th>
+              <td>
+
+                <a href="{{q.attachment}}" class="btn btn-info btn-sm" target="_blank"> View My Assignment </a>
+
+                </td>
+
+            </tr>
+
+            <tr>
+              <th scope="row">Stutes</th>
+              <td>
+                <button class="btn btn-info btn-sm">Submitted</button>
+                </td>
+            </tr>
+
+          </tbody>
+        </table>
+        {% endfor %}
+        </br></br>
+
+        <hr>
+
+
+        {% if get_grade_of_my_grade %}
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Student ID</th>
+              <th scope="col">Course Name</th>
+              <th scope="col">Assignment Name</th>
+              <th scope="col">Grade</th>
+              <th scope="col">Out of Grade</th>
+              <th scope="col">Mark</th>
+            </tr>
+          </thead>
+          {% for get_of_my_grade in get_grade_of_my_grade %}
+          <tbody>
+            <tr>
+              <th scope="row">{{get_of_my_grade.Student_ID}}</th>
+              <td>{{get_of_my_grade.course}}</td>
+              <td>{{get_of_my_grade.Assignment_name}}</td>
+              <td>{{get_of_my_grade.Grade}}</td>
+              <td>{{get_of_my_grade.Out_Of_Grade}}</td>
+              <td><button class="btn btn-info btn-sm">Complete</button></td>
+            </tr>
+
+          </tbody>
+          {% endfor %}
+        </table>
+
+
+        {% else %}
+        <span class="text-muted container pt-5 pl-5 ml-4 mb-5">Waiting for grade result..</span>
+        {% endif %}
+
+
+
+        {% else %}
+        <span class="text-muted container pt-5 pl-5 ml-4">You Have not submit your Assignment.</span>
+        {% endif %}
+
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock %}

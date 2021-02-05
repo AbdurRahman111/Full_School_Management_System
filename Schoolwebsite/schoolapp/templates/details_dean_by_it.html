@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+
+{%block title%}Staff Details{% endblock %}
+
+{%block body%}
+
+{% if request.session.IT_id %}
+
+<style>
+	.profile-pic{
+		max-width: 200px;
+		max-height:200px;
+		margin: 0 auto;
+		border-radius: 50%;
+	}
+</style>
+
+<br>
+
+<div class="row ml-2 pt-5">
+	<div class="col-md-3">
+		<div class="card card-body">
+
+			<hr>
+			<h3 style="text-align: center">{{Dean_details_by_id.Dean_Name}}</h3>
+			<hr>
+            <img src="/media/uploads/user.png" class="rounded profile-pic" alt="user">
+
+			<div class="container">
+				<a class="btn btn-outline-info btn-sm" href="{% url 'change_profile_by_it_service' Dean_details_by_id.id %}">Edit Profile</a>
+			</div>
+			<br/>
+			<div class="container">
+				<a class="btn btn-outline-info btn-sm" href="{% url 'changing_supervisor_dean' Dean_details_by_id.Dean_ID %}">Edit Supervisor</a>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="col-md-6 ml-5 mr-5 pt-3">
+		<div class="card card-body">
+			<table class="table container">
+
+			  <tbody>
+			    <tr>
+				  <td>Dean Name :</td>
+				  <td>{{Dean_details_by_id.Dean_Name}}</td>
+				</tr>
+				<tr>
+				  <td>IT-Service :</td>
+				  <td>{{Dean_details_by_id.IT_Service_info.IT_Service_Name}}</td>
+				</tr>
+				<tr>
+				  <td>Dean ID :</td>
+				  <td>{{Dean_details_by_id.Dean_ID}}</td>
+				</tr>
+				<tr>
+				  <td>Phone :</td>
+				  <td>{{Dean_details_by_id.phone}}</td>
+				</tr>
+				<tr>
+				  <td>Address :</td>
+				  <td>{{Dean_details_by_id.address}}</td>
+				</tr>
+				<tr>
+				  <td>Dob :</td>
+				  <td>{{Dean_details_by_id.dob}}</td>
+				</tr>
+
+                <tr>
+				  <td>Major :</td>
+				  <td>
+					{{Dean_details_by_id.major}}
+				  </td>
+				</tr>
+
+			  </tbody>
+
+			</table>
+
+		</div>
+</br></br>
+
+
+
+
+	</div>
+</div>
+{% else %}
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{%  extends 'base.html' %}
+{% load crispy_forms_tags %}
+{%block title%}Edit Profile{% endblock %}
+
+{%block body%}
+
+{% if request.session.IT_id %}
+
+<form class="container pt-5" action="" method="POST">{% csrf_token %}
+
+        </br>
+        <h2>Edit Profile</h2></br>
+        {{form1|crispy}}
+        <input type="hidden" value="dean_details_by_id.id" name="dean_id_update">
+    </br></br><button type="submit" class="btn btn-outline-success btn-sm">Save Profile</button>
+</form>
+<hr>
+</br>
+
+
+{% else %}
+{% endif %}
+{% endblock %}

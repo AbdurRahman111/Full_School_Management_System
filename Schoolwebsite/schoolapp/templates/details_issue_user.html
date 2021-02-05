@@ -1,0 +1,41 @@
+{%  extends 'base.html' %}
+
+{%block title%}Issue Details{% endblock %}
+
+{%block body%}
+<table class="table table-striped container pt-5">
+          <thead>
+            <tr>
+              <th scope="col">User Info</th>
+              <th scope="col">{{get_details_issue.user}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Issue Date</th>
+              <td>{{get_details_issue.date}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Issue</th>
+              <td>{{get_details_issue.issue}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Details</th>
+              <td>{{get_details_issue.details}}</td>
+            </tr>
+            {% if abc2 %}
+            <tr>
+              <th scope="row">Attachment</th>
+              <td>
+                  <a href="{{get_details_issue.Assignment_name}}" class="btn btn-info btn-sm" target="_blank"> View Issue </a>
+              </td>
+            </tr>
+          {% endif %}
+          <tr>
+              <th scope="row">Status</th>
+              <td><button class="btn btn-info"> {{get_details_issue.status}}</button></td>
+            </tr>
+          </tbody>
+        </table>
+
+{% endblock %}

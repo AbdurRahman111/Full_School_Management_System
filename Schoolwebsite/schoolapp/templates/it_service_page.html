@@ -1,0 +1,270 @@
+
+
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_tags %}
+{%block title%}{% endblock %}
+
+{%block body%}
+{% if messages %}
+{% for message in messages %}
+
+
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong>WellDone!</strong> {{message}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+{% endfor %}
+{% endif %}
+
+<div class="container pt-3"><hr><h2>Control Page</h2><hr>
+</div>
+
+<nav>
+  <div class="nav nav-tabs  container pt-5" id="nav-tab" role="tablist">
+    <a class="nav-link active" id="nav-show_teach-tab" data-toggle="tab" href="#nav-show_teach" role="tab" aria-controls="nav-show_teach" aria-selected="true">List of Deans</a>
+    <a class="nav-link" id="nav-show_stu-tab" data-toggle="tab" href="#nav-show_stu" role="tab" aria-controls="nav-show_stu" aria-selected="true">List of Managers</a>
+    <a class="nav-link" id="nav-add_teach-tab" data-toggle="tab" href="#nav-add_teach" role="tab" aria-controls="nav-add_teach" aria-selected="true">Add Deans</a>
+    <a class="nav-link" id="nav-add_stu-tab" data-toggle="tab" href="#nav-add_stu" role="tab" aria-controls="nav-add_stu" aria-selected="true">Add Manager</a>
+    <a class="nav-link" id="nav-vacation_req-tab" data-toggle="tab" href="#nav-vacation_req" role="tab" aria-controls="nav-vacation_req" aria-selected="true">List Of Issues</a>
+    <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="true">Profile</a>
+
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-show_teach" role="tabpanel" aria-labelledby="nav-show_teach-tab">
+
+
+      {% if get_all_dean %}
+      {% for k in get_all_dean %}
+          <div class="card container mt-4 mb-5">
+              <h5 class="card-header">{{k.Dean_Name}} - {{k.Dean_ID}}</h5>
+              <div class="card-body">
+
+
+                <form action="/details_dean_by_it" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="hidden" name="get_dean_id" value="{{k.id}}">
+                    </div>
+                    <button type="submit" class="btn btn-outline-info btn-sm">See Details</button>
+                </form>
+
+              </div>
+            </div>
+      {% endfor %}
+      {% else %}
+      <div class="mt-4 ml-5">
+      <span class="text-muted container pt-5 pl-5 ml-5">You have no Dean to show</span>
+        </div>
+      {% endif %}
+
+  </div>
+
+  <div class="tab-pane fade show" id="nav-show_stu" role="tabpanel" aria-labelledby="nav-show_stu-tab">
+
+      {% if get_manager_all %}
+      {% for l in get_manager_all %}
+          <div class="card container mt-4 mb-5">
+              <h5 class="card-header">{{l.manager_Name}} - {{l.manager_ID}}</h5>
+              <div class="card-body">
+
+
+                <form action="/details_manager_by_it" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="hidden" name="get_manager_id" value="{{l.id}}">
+                    </div>
+                    <button type="submit" class="btn btn-outline-info btn-sm">See Details</button>
+                </form>
+
+              </div>
+            </div>
+      {% endfor %}
+      {% else %}
+      <div class="mt-4 ml-5">
+      <span class="text-muted container pt-5 pl-5 ml-5">You have no Manager to show</span>
+        </div>
+      {% endif %}
+
+  </div>
+
+    <div class="tab-pane fade show" id="nav-add_teach" role="tabpanel" aria-labelledby="nav-add_teach-tab">
+
+        <form class="container pt-5 mb-5" action="/add_dean_by_it_service" method="POST">
+			{% csrf_token %}
+
+			<div class="form-group">
+			    <label for="exampleFormControlInput12">Dean ID</label>
+			    <input  type="text"  name="dean_ID" class="form-control" id="exampleFormControlInput12" placeholder="Dean ID" required>
+			    <input  type="hidden" value="{{IT_Service_login_Information_get_data.IT_Service_id}}" name="it_service_ID">
+			    <input  type="hidden" value="{{IT_Service_login_Information_get_data.IT_Service_Name}}" name="it_service_name">
+			</div>
+            <div class="form-group">
+			    <label for="exampleFormControlInput13">Dean Name</label>
+			    <input  type="text"  name="dean_name" class="form-control" id="exampleFormControlInput13" placeholder="Dean Name" required>
+			</div>
+            <div class="form-group">
+			    <label for="exampleFormControlInput14">Dean Number</label>
+			    <input  type="text"  name="phone_number" class="form-control" id="exampleFormControlInput14" placeholder="Phone Number" required>
+			</div>
+            <div class="form-group">
+			    <label for="exampleFormControlInput15">Address </label>
+			    <input  type="text"  name="address" class="form-control" id="exampleFormControlInput15" placeholder="Address " required>
+			</div>
+            <div class="form-group">
+			    <label for="exampleFormControlInput16">Dob</label>
+			    <input  type="date"  name="dob" class="form-control" id="exampleFormControlInput16" placeholder="Dob" required>
+			</div>
+            <div class="form-group">
+			    <label for="exampleFormControlInput17">Major</label>
+			    <input  type="text"  name="major" class="form-control" id="exampleFormControlInput17" placeholder="Major" required>
+			</div>
+
+			<div class="form-group">
+			    <label for="exampleFormControlInput18">Password</label>
+			    <input  type="password" name="password" class="form-control" id="exampleFormControlInput18" placeholder="********" required>
+			</div>
+            <hr>
+            <h4><b>Type Dean Id Again</b></h4>
+
+            {{form9|crispy}}
+            <input  type="hidden" name="it_sevice_id" value="{{request.session.IT_id}}">
+            <input  type="hidden" name="it_service_ID" value="{{request.session.IT_id}}">
+            <input  type="hidden" name="it_service_name" value="{{request.session.IT_name}}">
+
+            <button type="submit" class="btn btn-info">Assign Dean</button>
+
+		</form>
+        <br/>
+        <br/>
+        <br/>
+
+
+    </div>
+    <div class="tab-pane fade show" id="nav-add_stu" role="tabpanel" aria-labelledby="nav-add_stu-tab">
+
+        <form class="container pt-5 mb-5" action="/add_manager_by_it_service" method="POST">
+			{% csrf_token %}
+
+			<div class="form-group">
+			    <label for="exampleFormControlInput12">Manager ID</label>
+			    <input  type="text"  name="manager_ID" class="form-control" id="exampleFormControlInput22" placeholder="Manager ID" required>
+			    <input  type="hidden" value="{{IT_Service_login_Information_get_data.IT_Service_id}}" name="it_service_ID">
+			    <input  type="hidden" value="{{IT_Service_login_Information_get_data.IT_Service_Name}}" name="it_service_name">
+			</div>
+            <div class="form-group">
+			    <label for="exampleFormControlInput13">Manager Name</label>
+			    <input  type="text"  name="manager_name" class="form-control" id="exampleFormControlInput23" placeholder="Manager Name" required>
+			</div>
+            <div class="form-group">
+			    <label for="exampleFormControlInput14">Phone Number</label>
+			    <input  type="text"  name="phone_number" class="form-control" id="exampleFormControlInput24" placeholder="Phone Number" required>
+			</div>
+            <div class="form-group">
+			    <label for="exampleFormControlInput15">Address </label>
+			    <input  type="text"  name="address" class="form-control" id="exampleFormControlInput25" placeholder="Address " required>
+			</div>
+            <div class="form-group">
+			    <label for="exampleFormControlInput16">Dob</label>
+			    <input  type="date"  name="dob" class="form-control" id="exampleFormControlInput26" placeholder="Dob" required>
+			</div>
+            <div class="form-group">
+			    <label for="exampleFormControlInput17">Major</label>
+			    <input  type="text"  name="major" class="form-control" id="exampleFormControlInput27" placeholder="Major" required>
+			</div>
+
+			<div class="form-group">
+			    <label for="exampleFormControlInput18">Password</label>
+			    <input  type="password" name="password" class="form-control" id="exampleFormControlInput28" placeholder="********" required>
+			</div>
+
+            <hr>
+            <h4><b>Type Manager Id Again</b></h4>
+
+            {{form10|crispy}}
+            <input  type="hidden" name="it_sevice_id" value="{{request.session.IT_id}}">
+            <input  type="hidden" name="it_service_ID" value="{{request.session.IT_id}}">
+            <input  type="hidden" name="it_service_name" value="{{request.session.IT_name}}">
+
+            <button type="submit" class="btn btn-info">Assign Manager</button>
+
+		</form>
+        <br/>
+        <br/>
+        <br/>
+
+    </div>
+
+
+    <div class="tab-pane fade show" id="nav-vacation_req" role="tabpanel" aria-labelledby="nav-vacation_req-tab">
+        {% if filter_list_of_issue %}
+        {% for i in filter_list_of_issue %}
+        <div class="card container mt-4 mb-5">
+              <h5 class="card-header">{{i.user}} - {{i.date}}</h5>
+              <div class="card-body">
+                <button class="text-right btn btn-info"> <small>{{i.status}}</small></button>
+
+                <form action="/details_issue" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="hidden" name="get_issue_id" value="{{i.id}}">
+                    </div>
+                    <button type="submit" class="btn btn-outline-info btn-sm">See Details</button>
+                </form>
+
+              </div>
+            </div>
+        {% endfor %}
+        {% else %}
+        <h6 class="text-center">You have no Issue to show</h6>
+        {% endif %}
+
+
+          <div class="mt-4 ml-5">
+          <span class="text-muted container pt-5 pl-5 ml-5"></span>
+            </div>
+
+
+    </div>
+
+
+    <div class="tab-pane fade show" id="nav-profile" role="tabpanel" aria-labelledby="nav-add_project-tab">
+
+        <table class="table container pt-5 mb-5 pl-5 mt-5">
+
+			  <tbody>
+				<tr>
+				  <td>It-Service Name :</td>
+				  <td>{{IT_Service_login_Information_get_data.IT_Service_Name}}</td>
+				</tr>
+				<tr>
+				  <td>It-Service ID :</td>
+				  <td>{{IT_Service_login_Information_get_data.IT_Service_id}}</td>
+				</tr>
+
+
+				  <td>Email :</td>
+				  <td>
+                      {% if email_It_service %}
+                          {% for i in email_It_service %}
+                          {{i.It_email}}
+                          {% endfor %}
+                      {% else %}
+                      You have to added your email. Go to settings to Add Email.
+                        {% endif %}
+                  </td>
+				</tr>
+
+
+
+
+			  </tbody>
+			</table>
+
+    </div>
+</div>
+
+
+
+{% endblock %}

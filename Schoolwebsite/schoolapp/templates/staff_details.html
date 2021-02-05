@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+
+{%block title%}Staff Details{% endblock %}
+
+{%block body%}
+
+
+<style>
+	.profile-pic{
+		max-width: 200px;
+		max-height:200px;
+		margin: 0 auto;
+		border-radius: 50%;
+	}
+</style>
+
+<br>
+
+<div class="row ml-5 pt-5 pl-5">
+	<div class="col-md-3">
+		<div class="card card-body">
+
+			<hr>
+			<h3 style="text-align: center">{{add_staffs_by_manager_all_data.staff_name}}</h3>
+			<hr>
+
+
+
+            <img src="/media/uploads/user.png" class="rounded profile-pic" alt="user">
+
+
+		</div>
+	</div>
+	<div class="col-md-6 ml-5 mr-5 pt-3">
+		<div class="card card-body">
+			<table class="table container">
+
+			  <tbody>
+				<tr>
+				  <td>Staff Name :</td>
+				  <td>{{add_staffs_by_manager_all_data.staff_name}}</td>
+				</tr>
+				<tr>
+				  <td>Staff ID :</td>
+				  <td>{{add_staffs_by_manager_all_data.staff_ID}}</td>
+				</tr>
+				<tr>
+				  <td>Phone :</td>
+				  <td>{{add_staffs_by_manager_all_data.phone_number}}</td>
+				</tr>
+				<tr>
+				  <td>Address :</td>
+				  <td>{{add_staffs_by_manager_all_data.address}}</td>
+				</tr>
+				<tr>
+				  <td>Dob :</td>
+				  <td>{{add_staffs_by_manager_all_data.dob}}</td>
+				</tr>
+
+                <tr>
+				  <td>Major :</td>
+				  <td>
+					{{add_staffs_by_manager_all_data.major}}
+				  </td>
+				</tr>
+
+
+
+			  </tbody>
+			</table>
+		</div>
+</br></br>
+
+
+
+
+	</div>
+</div>
+
+
+{% endblock %}

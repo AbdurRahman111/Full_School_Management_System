@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+
+{%block title%}Manager Details{% endblock %}
+
+{%block body%}
+
+{% if request.session.IT_id %}
+
+<style>
+	.profile-pic{
+		max-width: 200px;
+		max-height:200px;
+		margin: 0 auto;
+		border-radius: 50%;
+	}
+</style>
+
+<br>
+
+<div class="row ml-5 pt-5 pl-5">
+	<div class="col-md-3">
+		<div class="card card-body">
+
+			<hr>
+			<h3 style="text-align: center">{{manager_details_by_id.manager_Name}}</h3>
+			<hr>
+            <img src="/media/uploads/user.png" class="rounded profile-pic" alt="user">
+
+			<div class="container">
+				<a class="btn btn-outline-info btn-sm" href="{% url 'change_manager_profile_by_it' manager_details_by_id.id %}">Edit Profile</a>
+			</div>
+			<br/>
+			<div class="container">
+				<a class="btn btn-outline-info btn-sm" href="{% url 'changing_supervisor_manager' manager_details_by_id.manager_ID %}">Edit Supervisor</a>
+			</div>
+
+		</div>
+	</div>
+	<div class="col-md-6 ml-5 mr-5 pt-3">
+		<div class="card card-body">
+			<table class="table container">
+
+			  <tbody>
+			    <tr>
+				  <td>Manager Name :</td>
+				  <td>{{manager_details_by_id.manager_Name}}</td>
+				</tr>
+				<tr>
+				  <td>IT-Service :</td>
+				  <td>{{manager_details_by_id.IT_Service_info.IT_Service_Name}}</td>
+				</tr>
+				<tr>
+				  <td>Manager ID :</td>
+				  <td>{{manager_details_by_id.manager_ID}}</td>
+				</tr>
+				<tr>
+				  <td>Phone :</td>
+				  <td>{{manager_details_by_id.phone}}</td>
+				</tr>
+				<tr>
+				  <td>Address :</td>
+				  <td>{{manager_details_by_id.address}}</td>
+				</tr>
+				<tr>
+				  <td>Dob :</td>
+				  <td>{{manager_details_by_id.dob}}</td>
+				</tr>
+
+                <tr>
+				  <td>Major :</td>
+				  <td>
+					{{manager_details_by_id.major}}
+				  </td>
+				</tr>
+
+
+
+			  </tbody>
+			</table>
+		</div>
+</br></br>
+
+
+
+
+	</div>
+</div>
+<h4 class="text-center">
+	Under This Manager:</br></br>
+	<form action="/see_list_student_it" method="POST" class="mb-2">{% csrf_token %}
+		<input type="hidden" value="{{manager_details_by_id.id}}" name="manager_ddet">
+		<button type="submit" class="btn btn-info">Lists of Students</button>
+	</form>
+
+	<form action="/see_list_student_it" method="POST" class="mb-2">{% csrf_token %}
+		<input type="hidden" value="{{manager_details_by_id.id}}" name="manager_ddet1">
+		<button type="submit" class="btn btn-info">Lists of Teacher</button>
+	</form>
+	<form action="/see_list_student_it" method="POST">{% csrf_token %}
+		<input type="hidden" value="{{manager_details_by_id.id}}" name="manager_ddet2">
+		<button type="submit" class="btn btn-info">Lists of Staff</button>
+	</form>
+
+</h4>
+
+
+{% else %}
+{% endif %}
+{% endblock %}

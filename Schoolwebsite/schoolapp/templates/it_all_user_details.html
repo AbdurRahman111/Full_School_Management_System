@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+
+{%block body%}
+<hr>
+{% if all_stu_manager %}
+        <h4 class="text-center">Lists of Students</h4>
+      {% for k in all_stu_manager %}
+          <div class="card container mt-4 mb-5">
+              <h5 class="card-header">{{k.student_name}} - {{k.student_ID}}</h5>
+              <div class="card-body">
+
+
+                <form action="/details_student_by_it" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="hidden" name="get_stud_id" value="{{k.id}}">
+                    </div>
+                    <button type="submit" class="btn btn-outline-info btn-sm">Edit Profile</button>
+                </form>
+
+              </div>
+            </div>
+      {% endfor %}
+{% elif manager_ddet %}
+<h4 class="text-center">No Student in this Manager !!</h4>
+{% endif %}
+
+{% if all_teach_manager %}
+    <h4 class="text-center">Lists of Teacher</h4>
+      {% for k in all_teach_manager %}
+          <div class="card container mt-4 mb-5">
+              <h5 class="card-header">{{k.teacher_name}} - {{k.teacher_ID}}</h5>
+              <div class="card-body">
+
+
+                <form action="/details_teacher_by_it" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="hidden" name="get_teach_id" value="{{k.id}}">
+                    </div>
+                    <button type="submit" class="btn btn-outline-info btn-sm">Edit Profile</button>
+                </form>
+
+              </div>
+            </div>
+      {% endfor %}
+{% elif manager_ddet1 %}
+<h4 class="text-center">No Student in this Manager !!</h4>
+{% endif %}
+
+{% if all_staff_manager %}
+
+<h4 class="text-center">Lists of Staff</h4>
+      {% for k in all_staff_manager %}
+          <div class="card container mt-4 mb-5">
+              <h5 class="card-header">{{k.staff_name}} - {{k.staff_ID}}</h5>
+              <div class="card-body">
+
+
+                <form action="/details_staff_by_it" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="hidden" name="get_staff_id" value="{{k.id}}">
+                    </div>
+                    <button type="submit" class="btn btn-outline-info btn-sm">Edit Profile</button>
+                </form>
+
+              </div>
+            </div>
+      {% endfor %}
+
+{% elif manager_ddet2 %}
+<h4 class="text-center">No Student in this Manager !!</h4>
+{% endif %}
+
+
+{% endblock %}

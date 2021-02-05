@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+
+{%block title%}Student Details{% endblock %}
+
+{%block body%}
+
+
+<style>
+	.profile-pic{
+		max-width: 200px;
+		max-height:200px;
+		margin: 0 auto;
+		border-radius: 50%;
+	}
+</style>
+
+<br>
+
+<div class="row ml-5 pt-5 pl-5">
+	<div class="col-md-3">
+		<div class="card card-body">
+
+			<hr>
+			<h3 style="text-align: center">{{student_details.student_name}}</h3>
+			<hr>
+
+
+
+            <img src="/media/uploads/student_user.png" class="rounded profile-pic" alt="user">
+
+
+		</div>
+	</div>
+	<div class="col-md-6 ml-5 mr-5 pt-3">
+		<div class="card card-body">
+			<table class="table container">
+
+			  <tbody>
+				<tr>
+				  <td>Student Name :</td>
+				  <td>{{student_details.student_name}}</td>
+				</tr>
+				<tr>
+				  <td>Student ID :</td>
+				  <td>{{student_details.student_ID}}</td>
+				</tr>
+				<tr>
+				  <td>Phone :</td>
+				  <td>{{student_details.phone_number}}</td>
+				</tr>
+				<tr>
+				  <td>Address :</td>
+				  <td>{{student_details.address}}</td>
+				</tr>
+				<tr>
+				  <td>Dob :</td>
+				  <td>{{student_details.dob}}</td>
+				</tr>
+
+                <tr>
+				  <td>Major :</td>
+				  <td>
+					{{student_details.major}}
+				  </td>
+				</tr>
+				<tr>
+				  <td>course :</td>
+				  <td>
+					  {% if Assign_students_to_c %}
+
+					  {% for i in Assign_students_to_c %}
+					  {{i.Course_Name.Course_Name}}</br>
+					  {% endfor %}
+					  {% else %}
+					  No courses added
+					  {% endif %}
+				  </td>
+				</tr>
+                <tr>
+				  <td>Email :</td>
+				  <td>
+					  {% if get_email %}
+
+					  {% for i in get_email %}
+					  {{i.Student_email}}</br>
+					  {% endfor %}
+					  {% else %}
+					  No Email added
+					  {% endif %}
+				  </td>
+				</tr>
+
+
+			  </tbody>
+			</table>
+		</div>
+</br></br>
+
+
+
+
+	</div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,152 @@
+
+
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+{%block title%}Details{% endblock %}
+
+{%block body%}
+
+<form method="POST" action="/search_by_dean" class="container mt-4">{% csrf_token %}
+          <input  type="text"  name="search_by_dean" value="{{search_by_dean}}" class="form-control mb-4" id="exampleFormControlInput70" placeholder="Search Name, Id, Phone">
+
+            <select name="seach_type" id="type" class="form-control form-control form-control-lg mb-2" required>
+										<option selected="selected" value="Student">Student</option>
+										<option value="Teacher">Teacher</option>
+									</select>
+          <input  type="hidden"  name="get_manager_id" value="{{get_manager_id}}">
+          <button type="submit" class="btn btn-info">Search</button>
+      </form>
+
+{% if search_by_dean %}
+
+      {% if search_student %}
+
+      <h5 class="text-center">Search for <b>{{search_stu_by_dean}}</b> :</h5>
+      <h6 class="text-center">Search Result-<b>{{search_student_count}}</b> found </h6>
+      {% for k in search_student %}
+          <div class="card container mt-4 mb-5">
+              <h5 class="card-header">Student : {{k.student_name}} - {{k.student_ID}}</h5>
+              <div class="card-body">
+
+
+                <form action="/details_info_students" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="hidden" name="get_stu_id" value="{{k.id}}">
+                    </div>
+                    <button type="submit" class="btn btn-outline-info btn-sm">See details</button>
+                </form>
+
+              </div>
+            </div>
+      {% endfor %}
+      {% elif search_teacher %}
+      <h5 class="text-center">Search for <b>{{search_teach_by_dean}}</b> :</h5>
+      <h6 class="text-center">Search Result-<b>{{search_teacher_count}}</b> found </h6>
+      {% for k in search_teacher %}
+          <div class="card container mt-4 mb-5">
+              <h5 class="card-header">Teacher : {{k.teacher_name}} - {{k.teacher_ID}}</h5>
+              <div class="card-body">
+
+
+                <form action="/details_teach_by_manager" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="hidden" name="get_teach_name" value="{{k.id}}">
+                    </div>
+                    <button type="submit" class="btn btn-outline-info btn-sm">See details</button>
+                </form>
+
+              </div>
+            </div>
+      {% endfor %}
+      {% elif search_by_dean %}
+      <h5 class="text-center">No Search for <b>{{search_by_dean}}</b> </h5>
+      {% else %}
+
+      {% endif %}
+
+
+
+{% else %}
+
+<div class="container mt-3">
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">List of Students</a>
+    <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">List of Teachers</a>
+    <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">List of Courses</a>
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+      {% if student_list %}
+
+      {% for k in student_list %}
+          <div class="card container mt-4 mb-5">
+              <h5 class="card-header">Student : {{k.student_name}} - {{k.student_ID}}</h5>
+              <div class="card-body">
+
+
+                <form action="/details_info_students" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="hidden" name="get_stu_id" value="{{k.id}}">
+                    </div>
+                    <button type="submit" class="btn btn-outline-info btn-sm">See details</button>
+                </form>
+
+              </div>
+            </div>
+      {% endfor %}
+      {% elif get_manager_id2 %}
+      <h6 class="text-center mt-5">No Student of this Manager !!</h6>
+      {% endif %}
+
+
+  </div>
+  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+
+      {% if teacher_list %}
+
+      {% for k in teacher_list %}
+          <div class="card container mt-4 mb-5">
+              <h5 class="card-header">Teacher : {{k.teacher_name}} - {{k.teacher_ID}}</h5>
+              <div class="card-body">
+
+
+                <form action="/details_teach_by_manager" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="hidden" name="get_teach_name" value="{{k.id}}">
+                    </div>
+                    <button type="submit" class="btn btn-outline-info btn-sm">See details</button>
+                </form>
+
+              </div>
+            </div>
+      {% endfor %}
+      {% elif get_manager_id2 %}
+      <h6 class="text-center mt-5">No Teacher of this Manager !!</h6>
+      {% else %}
+
+      {% endif %}
+  </div>
+  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+       {% if courses_list %}
+
+      {% for k in courses_list %}
+          <div class="card container mt-4 mb-2">
+              <h5 class="card-header">Course : {{k.Course_Name}}</h5>
+
+            </div>
+      {% endfor %}
+      {% else %}
+        <h5 class="text-center mt-5">No Course in This Manager.</h5>
+
+      {% endif %}
+
+  </div>
+</div>
+</div>
+
+
+{% endif %}
+{% endblock %}

@@ -1,0 +1,47 @@
+{%  extends 'base.html' %}
+
+{%block title%}Sumitted Assignment Student List{% endblock %}
+
+{%block body%}
+
+{% if get_submit_ass_fs_tt11 %}
+
+        {% for get_submit_ass in get_submit_ass_fs_tt11 %}
+        <div class="container">
+        <div class="card mb-3 ml-5 mt-5" style="max-width: 640px;">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img src="/media/uploads/student_user.png" class="rounded profile-pic mt-3 ml-5 mb-2" alt="user" height="150" width="160">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">Student ID : {{get_submit_ass.Student_ID}}</br>
+                    <small><span class="text-muted">(Assignment Name : {{get_submit_ass.Assignment_name}})</span></br>
+                    <span class="text-muted">(Course Name : {{get_submit_ass.course}})</span></small>
+                </h5>
+                <a href="{{get_submit_ass.attachment}}" class="btn btn-info btn-sm" target="_blank"><small>View Assignment and Download</small></a>
+
+
+                <form class="pt-2" method="POST" action="/grading_page">{% csrf_token %}
+                  <input type="hidden" name="stu_id_grade" value="{{get_submit_ass.Student_ID}}">
+                  <input type="hidden" name="stu_course_grade" value="{{get_submit_ass.course}}">
+                  <input type="hidden" name="stu_total_grade12" value="{{stu_total_grade1}}">
+                  <input type="hidden" name="stu_ass_name_grade" value="{{get_submit_ass.Assignment_name}}">
+
+
+                  <button class="btn btn-info btn-sm" type="submit"><small>Grade this Student</small></button>
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div></div>
+
+
+        {% endfor %}
+
+        {% else %}
+        <span class="text-muted container pt-5 pl-5 ml-4"> No Student Submit Assignment in this Course !!</span>
+        {% endif %}
+
+{% endblock %}

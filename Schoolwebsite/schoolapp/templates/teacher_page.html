@@ -1,0 +1,224 @@
+
+
+{% extends 'base.html' %}
+
+
+{%block title%}{% endblock %}
+
+{%block body%}
+
+<nav>
+  <div class="nav nav-tabs  container pt-5" id="nav-tab" role="tablist">
+    <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">List of courses</a>
+    <a class="nav-link" id="nav-vacation-tab" data-toggle="tab" href="#nav-vacation" role="tab" aria-controls="nav-vacation" aria-selected="true">vacation day Request</a>
+    <a class="nav-link" id="nav-vacationshow-tab" data-toggle="tab" href="#nav-vacationshow" role="tab" aria-controls="nav-vacation" aria-selected="true">vacation day sent</a>
+      <a class="nav-link" id="nav-ticket-tab" data-toggle="tab" href="#nav-ticket" role="tab" aria-controls="nav-ticket" aria-selected="true">Ticket</a>
+      <a class="nav-link" id="nav-ticket_status-tab" data-toggle="tab" href="#nav-ticket_status" role="tab" aria-controls="nav-ticket_status" aria-selected="true">Ticket Status</a>
+    <a class="nav-link" id="nav-my_details-tab" data-toggle="tab" href="#nav-my_details" role="tab" aria-controls="nav-my_details" aria-selected="true">Profile</a>
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+
+
+      {% if get_course_name_t_cours %}
+      {% for k in get_course_name_t_cours %}
+          <div class="card container mt-4 mb-5">
+              <h5 class="card-header">{{k}}</h5>
+              <div class="card-body">
+
+
+                <form action="/assignment_page" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input type="hidden" name="get_course_name" value="{{k.Course_Name.Course_Name}}">
+                        <input type="hidden" name="get_teacher_identi" value="{{teach_course_id}}">
+                    </div>
+                    <button type="submit" class="btn btn-outline-info btn-sm">All Student</button>
+                </form>
+
+              </div>
+            </div>
+      {% endfor %}
+      {% else %}
+      <div class="mt-4 ml-5">
+      <span class="text-muted container pt-5 pl-5 ml-5">You have no course to show</span>
+        </div>
+      {% endif %}
+
+  </div>
+
+  <div class="tab-pane fade show" id="nav-vacation" role="tabpanel" aria-labelledby="nav-vacation-tab">
+
+
+      <form class="container pt-5" action="/vacation_day" method="POST">{% csrf_token %}
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Date</label>
+            <input type="date" name="req_date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+            <input type="hidden" name="req_userid" value="{{request.session.Teacher_id}}">
+            <input type="hidden" name="req_username" value="{{request.session.Teacher_name}}">
+            <input type="hidden" name="req_managername" value="{{get_id_teach_manager_ID}}">
+            <input type="hidden" name="req_status" value="In-progress">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword120" class="form-label">Requested Days</label>
+            <input type="text" name="req_days_date" class="form-control" id="exampleInputPassword120" required>
+          </div>
+          <div class="form-floating">
+              <label for="floatingTextarea2">Reason</label>
+              <textarea class="form-control" name="req_reason" placeholder="Leave a reason here" id="floatingTextarea2" style="height: 100px" required></textarea>
+
+            </div><br>
+
+          <button type="submit" class="btn btn-info">Submit</button>
+        </form>
+  </div>
+  <div class="tab-pane fade show" id="nav-vacationshow" role="tabpanel" aria-labelledby="nav-vacationshow-tab">
+      {% if Timeoff_user_sdata %}
+      {% for vaca in Timeoff_user_sdata %}
+      <table class="table table-striped container pt-5">
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">{{vaca.date}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Requested Days</th>
+              <td>{{vaca.requested_days}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Reason</th>
+              <td>{{vaca.reason}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Status</th>
+              <td>
+                  <a class="btn btn-info">{{vaca.status}}</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      {% endfor %}
+      {% else %}
+      <div class="mt-5 pl-5 ml-5">
+      <span class="text-muted container pl-5 ml-5 pt-5"> No Requested Yet</span>
+      </div>
+      {% endif %}
+
+  </div>
+
+    <div class="tab-pane fade show" id="nav-ticket" role="tabpanel" aria-labelledby="nav-add_project-tab">
+        <form class="container pt-5" action="/submit_issue" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Issue</label>
+                <input  type="text"  name="issue_name" class="form-control" id="exampleFormControlInput1" placeholder="Issue" required>
+                <input  type="hidden" value="{{request.session.Teacher_id}}"  name="user_info1">
+                <input  type="hidden" value="{{request.session.Teacher_name}}"  name="user_info2">
+                <input  type="hidden" value="{{get_it_manager.IT_Service_info.IT_Service_id}}"  name="IT_Service_info">
+            </div>
+
+            <div class="form-floating">
+                  <textarea class="form-control" name="details_issue" placeholder="Details" id="floatingTextarea12" style="height: 100px" required></textarea>
+                </div>
+
+            <div class="form-group">
+                <label for="exampleFormControlInput7">Attachment</label>
+                <input  type="file"  name="attachment_issue" class="form-control" id="exampleFormControlInput7">
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-outline-success btn-sm mt-4 mb-5" type="submit">Submit</button>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="tab-pane fade show" id="nav-ticket_status" role="tabpanel" aria-labelledby="nav-ticket_status-tab">
+        {% if get_issue %}
+      {% for k in get_issue %}
+          <div class="card container mt-4 mb-5">
+              <h5 class="card-header">{{k.issue}}  <small style="color:#07889E;">({{k.date}})</small></h5>
+              <div class="card-body">
+                  <button class="text-right btn btn-info"> <small>{{k.status}}</small></button>
+
+                <form action="/details_issue_user" method="POST">{% csrf_token %}
+                    <div class="form-group">
+
+                        <input type="hidden" name="get_issue_id_user" value="{{k.id}}">
+                    </div>
+                    <button type="submit" class="btn btn-outline-info btn-sm">See Details</button>
+                </form>
+
+              </div>
+            </div>
+          {% endfor %}
+      {% else %}
+      <div class="mt-4 ml-5 pl-5">
+      <span class="text-muted container pt-5 pl-5 ml-5">You have no Issue to show</span>
+        </div>
+      {% endif %}
+    </div>
+
+  <div class="tab-pane fade show" id="nav-my_details" role="tabpanel" aria-labelledby="nav-my_details-tab">
+
+
+      <table class="table container pt-5 mb-5 pl-5 mt-5">
+
+			  <tbody>
+				<tr>
+				  <td>Teacher Name :</td>
+				  <td>{{request.session.Teacher_name}}</td>
+				</tr>
+				<tr>
+				  <td>Teacher ID :</td>
+				  <td>{{request.session.Teacher_id}}</td>
+				</tr>
+              <tr>
+				  <td>Supervisor Name :</td>
+				  <td>{{get_id_teach.manager_ID.manager_Name}}</td>
+				</tr>
+              <tr>
+				  <td>Phone :</td>
+				  <td>{{get_id_teach.phone_number}}</td>
+				</tr>
+              <tr>
+				  <td>Address :</td>
+				  <td>{{get_id_teach.address}}</td>
+				</tr>
+              <tr>
+				  <td>Dob :</td>
+				  <td>{{get_id_teach.dob}}</td>
+				</tr>
+              <tr>
+				  <td>Mejor :</td>
+				  <td>{{get_id_teach.major}}</td>
+				</tr>
+
+                <tr>
+				  <td>Email :</td>
+				  <td>
+                      {% if store_email_teacher_dtta %}
+                      {% for i in store_email_teacher_dtta %}
+                      {{i.Teacher_email}}
+                      {% endfor %}
+                      {% else %}
+                      You have to added your email. Go to settings to Add Email.
+                        {% endif %}
+                  </td>
+				</tr>
+
+
+			  </tbody>
+			</table>
+
+  </div>
+
+</div>
+
+
+
+
+
+{% endblock %}

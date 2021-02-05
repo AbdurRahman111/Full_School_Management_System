@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+
+{%block title%}Project{% endblock %}
+
+{%block body%}
+
+
+
+<table class="table table-striped container mt-5">
+  <thead>
+    <tr>
+      <th scope="col">Project</th>
+      <th scope="col">{{get_project_detail}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Event</th>
+      <td>{{get_project_detail.event}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Status</th>
+      <td>{{get_project_detail.status}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Date</th>
+      <td>{{get_project_detail.date}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Details</th>
+      <td>{{get_project_detail.details}}</td>
+    </tr>
+    {% if abc2 %}
+    <tr>
+      <th scope="row">Attachment</th>
+      <td>
+        <a href="{{get_project_detail.attachment}}" class="btn btn-info btn-sm" target="_blank">Download</a>
+        </td>
+    </tr>
+    {% endif %}
+  </tbody>
+</table>
+
+{% endblock %}
